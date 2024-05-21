@@ -6,9 +6,9 @@ const { User, Course } = require("../db");
 // User Routes
 router.post("/signup", async (req, res) => {
   // Implement user signup logic
-  const username = req.headers.username;
-  const password = req.headers.password;
-  await User.findOne({
+  const username = req.body.username;
+  const password = req.body.password;
+  await User.create({
     username,
     password,
   });
@@ -28,7 +28,7 @@ router.post("/courses/:courseId", userMiddleware, async (req, res) => {
   const courseId = req.params.courseId;
   const username = req.headers.username;
   await User.updateOne({
-    username
+    username:username
   },{
     "$push":{
         purchasedCourses: courseId
